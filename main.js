@@ -110,12 +110,6 @@ class IpAddress {
   // data as the second argument to the callback function.
  
 
-    
-    
-
-  return callback(firstIpAddress, callbackError);
-}
-
 
 
 }
