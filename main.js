@@ -59,21 +59,15 @@ class IpAddress {
     // For more information, consult the Log Class guide on the Itential
     // Developer Hub https://developer.itential.io/ located
     // under Documentation -> Developer Guides -> Log Class Guide
-    log.info('Starting the IpAddress product.');
+    console.log('Starting the IpAddress product.');
   }
 
-  getFirstIpAddress(cidrStr, callback) {
+ getFirstIpAddress(cidrStr, callback) {
 
   // Initialize return arguments for callback
-  //let firstIpAddress = null;
+  let firstIpAddress = null;
   let callbackError = null;
   let callbackData = null;
-
-  let firstIpAddress=
-  {
-    ipv4:null,
-    ipv6:null
-  };
 
   // Instantiate an object from the imported class and assign the instance to variable cidr.
   const cidr = new IPCIDR(cidrStr);
@@ -93,9 +87,23 @@ class IpAddress {
     // If the passed CIDR is valid, call the object's toArray() method.
     // Notice the destructering assignment syntax to get the value of the first array's element.
     [firstIpAddress] = cidr.toArray(options);
-     firstIpAddress.ipv6 = getIpv4MappedIpv6Address(firstIpAddress.ipv4);
-   
+     let mappedAddress = getIpv4MappedIpv6Address(firstIpAddress);
+   if( mappedAddress ) {
+     callbackData=mappedAddress;
+    } 
   }
+  // Call the passed callback function.
+  // Node.js convention is to pass error data as the first argument to a callback.
+  // The IAP convention is to pass returned data as the first argument and error
+  // data as the second argument to the callback function.
+ 
+
+    var object={ipv4:firstIpAddress,ipv6:callbackData};
+    
+
+  return callback(JSON.stringify(object), callbackError);
+}
+
   // Call the passed callback function.
   // Node.js convention is to pass error data as the first argument to a callback.
   // The IAP convention is to pass returned data as the first argument and error
