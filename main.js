@@ -65,9 +65,10 @@ class IpAddress {
  getFirstIpAddress(cidrStr, callback) {
 
   // Initialize return arguments for callback
-  let firstIpAddress = null;
+  let firstIpAddress ={ipv4:null,ipv6:null};
   let callbackError = null;
   let callbackData = null;
+
 
   // Instantiate an object from the imported class and assign the instance to variable cidr.
   const cidr = new IPCIDR(cidrStr);
@@ -86,11 +87,9 @@ class IpAddress {
   } else {
     // If the passed CIDR is valid, call the object's toArray() method.
     // Notice the destructering assignment syntax to get the value of the first array's element.
-    [firstIpAddress] = cidr.toArray(options);
-     let mappedAddress = getIpv4MappedIpv6Address(firstIpAddress);
-   if( mappedAddress ) {
-     callbackData=mappedAddress;
-    } 
+    [firstIpAddress.ipv4] = cidr.toArray(options);
+     firstIpAddress.ipv6 = getIpv4MappedIpv6Address(firstIpAddress.ipv4);
+   
   }
   // Call the passed callback function.
   // Node.js convention is to pass error data as the first argument to a callback.
@@ -98,10 +97,10 @@ class IpAddress {
   // data as the second argument to the callback function.
  
 
-    var object={ipv4:firstIpAddress,ipv6:callbackData};
+   
     
 
-  return callback(JSON.stringify(object), callbackError);
+  return callback(firstIpAddress, callbackError);
 }
 
   // Call the passed callback function.
