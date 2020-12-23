@@ -131,12 +131,13 @@ function main() {
     // Call getFirstIpAddress and pass the test subnet and an anonymous callback function.
     // The callback is using the fat arrow operator: () => { }
     getFirstIpAddress(sampleCidrs[i], (data, error) => {
-        getIpv4MappedIpv6Address(data.object.ipv4)
+       
       // Now we are inside the callback function.
       // Display the results on the console.
       if (error) {
         console.error(`  Error returned from GET request: ${error}`);
       }
+       
       console.log(`  Response returned from GET request: ${data}`);
     });
   }
