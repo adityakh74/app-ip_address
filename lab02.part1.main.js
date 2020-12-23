@@ -11,7 +11,7 @@ const IPCIDR = require('ip-cidr');
  * @param {string} cidrStr - The IPv4 subnet expressed
  *                 in CIDR format.
  * @param {callback} callback - A callback function.
- * @return {object} (ipv4) - An IPv4 address,(ipv6) - An IPv6 address.
+ * @return {string} (firstIpAddress) - An IPv4 address.
  */
 function getFirstIpAddress(cidrStr, callback) {
 
@@ -42,20 +42,7 @@ function getFirstIpAddress(cidrStr, callback) {
   // Node.js convention is to pass error data as the first argument to a callback.
   // The IAP convention is to pass returned data as the first argument and error
   // data as the second argument to the callback function.
-  getIpv4MappedIpv6Address(firstIpAddress,(data,error)=>{
-       
-      // Now we are inside the callback function.
-      // Display the results on the console.
-      if (error) {
-        console.error(`  Error returned from GET request: ${error}`);
-      }
-      console.log(`  Response returned from GET request: ${data}`);
-    });
-
-    var object={ipv4:firstIpAddress,ipv6:data};
-    console.log("returned object "+object);
-
-  return callback(object, callbackError);
+  return callback(firstIpAddress, callbackError);
 }
 
 /**
@@ -129,7 +116,6 @@ function main() {
     // Call getFirstIpAddress and pass the test subnet and an anonymous callback function.
     // The callback is using the fat arrow operator: () => { }
     getFirstIpAddress(sampleCidrs[i], (data, error) => {
-        getIpv4MappedIpv6Address(ipv4)
       // Now we are inside the callback function.
       // Display the results on the console.
       if (error) {
