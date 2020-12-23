@@ -15,7 +15,6 @@
 */
 const path = require('path');
 
-const log = require('log');
 
 /**
  * Import helper function module located in the same directory
@@ -61,7 +60,7 @@ class IpAddress {
     // For more information, consult the Log Class guide on the Itential
     // Developer Hub https://developer.itential.io/ located
     // under Documentation -> Developer Guides -> Log Class Guide
-    log.info('Starting the IpAddress product.');
+    console.log('Starting the IpAddress product.');
   }
 
  getFirstIpAddress(cidrStr, callback) {
